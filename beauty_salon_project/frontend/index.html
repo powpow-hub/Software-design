@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Салон красоты "Элегантность"</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #ffd700;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #ffd700;
+            color: #333;
+        }
+
+        .btn-primary:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+
+        /* Forms */
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Appointments */
+        .appointment-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .appointment-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Reviews */
+        .review-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 {
+            margin-bottom: 1rem;
+        }
+
+        .mt-2 {
+            margin-top: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">✨ Элегантность</div>
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showPage('home')">Главная</a></li>
+                <li><a href="#" onclick="showPage('services')">Услуги</a></li>
+                <li><a href="#" onclick="showPage('appointments')" id="appointments-link" class="hidden">Мои записи</a></li>
+                <li><a href="#" onclick="showPage('reviews')">Отзывы</a></li>
+                <li><a href="#" onclick="showPage('admin')" id="admin-link" class="hidden">Админ</a></li>
+            </ul>
+            <div class="auth-buttons" id="auth-buttons">
+                <a href="#" class="btn btn-secondary" onclick="showModal('loginModal')">Войти</a>
+                <a href="#" class="btn btn-primary" onclick="showModal('registerModal')">Регистрация</a>
+            </div>
+            <div class="user-info hidden" id="user-info">
+                <span id="user-name"></span>
+                <a href="#" class="btn btn-secondary" onclick="logout()">Выйти</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Главная-->
+        <div id="home-page" class="page">
+            <div class="hero">
+                <h1>Добро пожаловать в салон "Элегантность"</h1>
+                <p>Профессиональные услуги красоты для вашего совершенства</p>
+                <a href="#" class="btn btn-primary" onclick="showPage('services')">Посмотреть услуги</a>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💇</div>
+                    <h3>Стрижка и укладка</h3>
+                    <p>Профессиональные стрижки и укладки от лучших мастеров</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💅</div>
+                    <h3>Маникюр и педикюр</h3>
+                    <p>Уход за ногтями с использованием качественных материалов</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">✨</div>
+                    <h3>Косметология</h3>
+                    <p>Современные процедуры для красоты и здоровья кожи</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Услуги -->
+        <div id="services-page" class="page hidden">
+            <div class="card">
+                <h3>Наши услуги</h3>
+                <div id="services-list">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Записи -->
+        <div id="appointments-page" class="page hidden">
+            <div class="card">
+                <h3>Мои записи</h3>
+                <div id="appointments-list">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Отзывы -->
+        <div id="reviews-page" class="page hidden">
+            <div class="card">
+                <h3>Отзывы клиентов</h3>
+                <div id="reviews-list">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Админ -->
+        <div id="admin-page" class="page hidden">
+            <div class="card">
+                <h3>Панель администратора</h3>
+                <div class="mb-2">
+                    <button class="btn btn-primary" onclick="showModal('addServiceModal')">Добавить услугу</button>
+                </div>
+                <div id="admin-content">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Вход -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('loginModal')">&times;</span>
+            <h3 class="text-center mb-2">Вход в систему</h3>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Пароль:</label>
+                    <input type="password" id="loginPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Регистрация -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('registerModal')">&times;</span>
+            <h3 class="text-center mb-2">Регистрация</h3>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerEmail">Email:</label>
+                    <input type="email" id="registerEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerName">Полное имя:</label>
+                    <input type="text" id="registerName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Телефон:</label>
+                    <input type="tel" id="registerPhone" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Пароль:</label>
+                    <input type="password" id="registerPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Услуги -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('appointmentModal')">&times;</span>
+            <h3 class="text-center mb-2">Запись на услугу</h3>
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label for="appointmentDate">Дата и время:</label>
+                    <input type="datetime-local" id="appointmentDate" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentNotes">Примечания:</label>
+                    <textarea id="appointmentNotes" class="form-control" rows="3"></textarea>
+                </div>
+                <input type="hidden" id="appointmentServiceId">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Записаться</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Отзывы -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('reviewModal')">&times;</span>
+            <h3 class="text-center mb-2">Оставить отзыв</h3>
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label for="reviewRating">Оценка:</label>
+                    <select id="reviewRating" class="form-control" required>
+                        <option value="">Выберите оценку</option>
+                        <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                        <option value="4">⭐⭐⭐⭐ (4)</option>
+                        <option value="3">⭐⭐⭐ (3)</option>
+                        <option value="2">⭐⭐ (2)</option>
+                        <option value="1">⭐ (1)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reviewComment">Комментарий:</label>
+                    <textarea id="reviewComment" class="form-control" rows="4"></textarea>
+                </div>
+                <input type="hidden" id="reviewServiceId">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить отзыв</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Добавить услугу -->
+    <div id="addServiceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('addServiceModal')">&times;</span>
+            <h3 class="text-center mb-2">Добавить услугу</h3>
+            <form id="addServiceForm">
+                <div class="form-group">
+                    <label for="serviceName">Название:</label>
+                    <input type="text" id="serviceName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceDescription">Описание:</label>
+                    <textarea id="serviceDescription" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="servicePrice">Цена:</label>
+                    <input type="number" id="servicePrice" class="form-control" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceDuration">Длительность (минуты):</label>
+                    <input type="number" id="serviceDuration" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceSpecialist">Специалист:</label>
+                    <input type="text" id="serviceSpecialist" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Добавить</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8000';
+        let currentUser = null;
+        let authToken = localStorage.getItem('authToken');
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            if (authToken) {
+                loadUserProfile();
+            }
+            loadServices();
+            loadReviews();
+        });
+
+        // Authentication Functions
+        async function login(email, password) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    authToken = data.access_token;
+                    localStorage.setItem('authToken', authToken);
+                    await loadUserProfile();
+                    hideModal('loginModal');
+                    showAlert('Успешный вход в систему!', 'success');
+                } else {
+                    showAlert(data.detail || 'Ошибка входа', 'error');
+                }
+            } catch (error) {
+                showAlert('Ошибка сети', 'error');
+            }
+        }
+
+        async function register(userData) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    hideModal('registerModal');
+                    showAlert('Регистрация прошла успешно! Теперь вы можете войти.', 'success');
+                } else {
+                    showAlert(data.detail || 'Ошибка регистрации', 'error');
+                }
+            } catch (error) {
+                showAlert('Ошибка сети', 'error');
+            }
+        }
+
+        async function loadUserProfile() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/users/me`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+
+                if (response.ok) {
+                    currentUser = await response.json();
+                    updateUIForLoggedInUser();
+                } else {
+                    logout();
+                }
+            } catch (error) {
+                logout();
+            }
+        }
+
+        function updateUIForLoggedInUser() {
+            document.getElementById('auth-buttons').classList.add('hidden');
+            document.getElementById('user-info').classList.remove('hidden');
+            document.getElementById('user-name').textContent = currentUser.full_name;
+            document.getElementById('appointments-link').classList.remove('hidden');
+
+            if (currentUser.role === 'admin') {
+                document.getElementById('admin-link').classList.remove('hidden');
+            }
+        }
+
+        function logout() {
+            authToken = null;
+            currentUser = null;
+            localStorage.removeItem('authToken');
+
+            document.getElementById('auth-buttons').classList.remove('hidden');
+            document.getElementById('user-info').classList.add('hidden');
+            document.getElementById('appointments-link').classList.add('hidden');
+            document.getElementById('admin-link').classList.add('hidden');
+
+            showPage('home');
+        }
+
+        // Services Functions
+        async function loadServices() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/services`);
+                const services = await response.json();
+
+                const servicesHtml = services.map(service => `
+                    <div class="service-card">
+                        <h4>${service.name}</h4>
+                        <p>${service.description || ''}</p>
+                        <div class="service-price">${service.price} ₽</div>
+                        <p><strong>Длительность:</strong> ${service.duration_minutes} мин</p>
+                        ${service.specialist_type ? `<p><strong>Специалист:</strong> ${service.specialist_type}</p>` : ''}
+                        ${authToken ? `
+                            <button class="btn btn-primary mt-2" onclick="bookAppointment(${service.id})">Записаться</button>
+                            <button class="btn btn-secondary mt-2" onclick="openReviewModal(${service.id})">Оставить отзыв</button>
+                        ` : ''}
+                    </div>
+                `).join('');
+
+                document.getElementById('services-list').innerHTML = servicesHtml;
+            } catch (error) {
+                document.getElementById('services-list').innerHTML = '<p>Ошибка загрузки услуг</p>';
+            }
+        }
+
+        // Appointments Functions
+        async function loadAppointments() {
+            if (!authToken) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/appointments/my`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+
+                const appointments = await response.json();
+
+                const appointmentsHtml = appointments.map(appointment => `
+                    <div class="appointment-card">
+                        <h4>Услуга ID: ${appointment.service_id}</h4>
+                        <p><strong>Дата:</strong> ${new Date(appointment.appointment_date).toLocaleString()}</p>
+                        <p><strong>Статус:</strong> <span class="appointment-status status-${appointment.status}">${appointment.status}</span></p>
+                        ${appointment.notes ? `<p><strong>Примечания:</strong> ${appointment.notes}</p>` : ''}
+                        ${appointment.status === 'pending' ? `
+                            <button class="btn btn-secondary mt-2" onclick="cancelAppointment(${appointment.id})">Отменить</button>
+                        ` : ''}
+                    </div>
+                `).join('');
+
+                document.getElementById('appointments-list').innerHTML = appointmentsHtml || '<p>У вас нет записей</p>';
+            } catch (error) {
+                document.getElementById('appointments-list').innerHTML = '<p>Ошибка загрузки записей</p>';
+            }
+        }
+
+        async function bookAppointment(serviceId) {
+            document.getElementById('appointmentServiceId').value = serviceId;
+            showModal('appointmentModal');
+        }
+
+        async function cancelAppointment(appointmentId) {
+            if (!confirm('Вы уверены, что хотите отменить запись?')) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/appointments/${appointmentId}/cancel`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+
+                if (response.ok) {
+                    showAlert('Запись отменена', 'success');
+                    loadAppointments();
+                } else {
+                    showAlert('Ошибка отмены записи', 'error');
+                }
+            } catch (error) {
+                showAlert('Ошибка сети', 'error');
+            }
+        }
+
+        // Reviews Functions
+        async function loadReviews() {
+            try {
+                // For demo purposes, we'll show some mock reviews
+                const reviewsHtml = `
+                    <div class="review-card">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p>"Отличный сервис! Очень довольна результатом стрижки."</p>
+                        <small>- Анна К.</small>
+                    </div>
+                    <div class="review-card">
+                        <div class="stars">⭐⭐⭐⭐</div>
+                        <p>"Хороший маникюр, но немного долго ждала."</p>
+                        <small>- Мария С.</small>
+                    </div>
+                `;
+
+                document.getElementById('reviews-list').innerHTML = reviewsHtml;
+            } catch (error) {
+                document.getElementById('reviews-list').innerHTML = '<p>Ошибка загрузки отзывов</p>';
+            }
+        }
+
+        function openReviewModal(serviceId) {
+            if (!authToken) {
+                showAlert('Для оставления отзыва необходимо войти в систему', 'error');
+                return;
+            }
+            document.getElementById('reviewServiceId').value = serviceId;
+            showModal('reviewModal');
+        }
+
+        // Form Handlers
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            await login(email, password);
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userData = {
+                email: document.getElementById('registerEmail').value,
+                full_name: document.getElementById('registerName').value,
+                phone: document.getElementById('registerPhone').value,
+                password: document.getElementById('registerPassword').value
+            };
+            await register(userData);
+        });
+
+        document.getElementById('appointmentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const appointmentData = {
+                service_id: parseInt(document.getElementById('appointmentServiceId').value),
+                appointment_date: document.getElementById('appointmentDate').value,
+                notes: document.getElementById('appointmentNotes').value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/appointments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(appointmentData)
+                });
+
+                if (response.ok) {
+                    hideModal('appointmentModal');
+                    showAlert('Запись создана успешно!', 'success');
+                    document.getElementById('appointmentForm').reset();
+                } else {
+                    showAlert('Ошибка создания записи', 'error');
+                }
+            } catch (error) {
+                showAlert('Ошибка сети', 'error');
+            }
+        });

@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: beauty_salon
+      POSTGRES_USER: beauty_user
+      POSTGRES_PASSWORD: beauty_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  user-service:
+    build: ./services/user_service
+    ports:
+      - "8001:8000"
+    environment:
+      PYTHONPATH: "/app/beauty_salon_project:${PYTHONPATH}"
+      DATABASE_URL: postgresql://beauty_user:beauty_password@postgres:5432/beauty_salon
+      SECRET_KEY: your-super-secret-key-here
+    depends_on:
+      - postgres
+    volumes:
+      - ./shared/.env:/app/shared/.env
+
+  service-management:
+    build: ./services/service_management
+    ports:
+      - "8002:8000"
+    environment:
+      PYTHONPATH: "/app/beauty_salon_project:${PYTHONPATH}"
+      DATABASE_URL: postgresql://beauty_user:beauty_password@postgres:5432/beauty_salon
+    depends_on:
+      - postgres
+    volumes:
+      - ./shared/.env:/app/shared/.env
+
+  appointment-service:
+    build: ./services/appointment_service
+    ports:
+      - "8003:8000"
+    environment:
+      PYTHONPATH: "/app/beauty_salon_project:${PYTHONPATH}"
+      DATABASE_URL: postgresql://beauty_user:beauty_password@postgres:5432/beauty_salon
+    depends_on:
+      - postgres
+    volumes:
+      - ./shared/.env:/app/shared/.env
+
+  review-service:
+    build: ./services/review_service
+    ports:
+      - "8004:8000"
+    environment:
+      PYTHONPATH: "/app/beauty_salon_project:${PYTHONPATH}"
+      DATABASE_URL: postgresql://beauty_user:beauty_password@postgres:5432/beauty_salon
+    depends_on:
+      - postgres
+    volumes:
+      - ./shared/.env:/app/shared/.env
+
+  api-gateway:
+    build: ./api_gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - user-service
+      - service-management
+      - appointment-service
+      - review-service
+
+volumes:
+  postgres_data:
