@@ -4,7 +4,6 @@ from typing import List
 
 app = FastAPI(title="Beauty Salon API Gateway", version="1.0.0")
 
-# Service URLs (in production, would use service discovery)
 USER_SERVICE_URL = "http://localhost:8001"
 SERVICE_MANAGEMENT_URL = "http://localhost:8002"
 APPOINTMENT_SERVICE_URL = "http://localhost:8003"
@@ -45,7 +44,6 @@ async def get_profile(authorization: str = None):
     return await forward_request(f"{USER_SERVICE_URL}/users/me", headers=headers)
 
 
-# Service routes
 @app.get("/services")
 async def get_services():
     return await forward_request(f"{SERVICE_MANAGEMENT_URL}/services")
@@ -82,7 +80,6 @@ async def cancel_appointment(appointment_id: int, authorization: str = None):
                                  headers=headers)
 
 
-# Review routes
 @app.post("/reviews")
 async def create_review(review_data: dict, authorization: str = None):
     headers = {"Authorization": authorization} if authorization else None
